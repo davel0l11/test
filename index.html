@@ -11,32 +11,35 @@
 family=Inter:wght@400;600;700;800;900&family=Press+Start+2P&display=swap"
 rel="stylesheet">
   <style>
-:root {
-/* Slightly prettier palette (no text changes needed) */
---bg: #0a0f1b;
---panel: #111a30;
-  /* "White" surfaces now a softer, fitting tint instead of stark white */
---surface: rgba(210, 225, 255, .07);
---surface2: rgba(210, 225, 255, .10);
-  --border: rgba(255,255,255,.12);
-  /* Text slightly lighter for better contrast on dark UI */
---text: rgba(244, 247, 255, .94);
---muted: rgba(214, 222, 245, .74);
-  --accent:#b35cff;
+/* 🔒 HARD LOCK DARK BACKGROUND */
+html, body {
+margin: 0;
+padding: 0;
+background: #070b14;
+color-scheme: dark;
+}
+  :root {
+--bg:#070b14;
+--panel:#0f162b;
+--surface: rgba(200,220,255,.07);
+--surface2: rgba(200,220,255,.10);
+--border: rgba(255,255,255,.12);
+--text: rgba(245,248,255,.96);
+--muted: rgba(214,222,245,.78);
+--accent:#b35cff;
 --accent2:#3ee1ff;
 --good:#46f2a3;
 --warn:#ffcc66;
-  --glow: 0 0 0 2px rgba(179,92,255,.30), 0 0 28px rgba(179,92,255,.18);
+--glow: 0 0 0 2px rgba(179,92,255,.30), 0 0 28px rgba(179,92,255,.18);
 }
   * { box-sizing:border-box; }
   body {
-margin:0;    font-family:Inter,system-ui;
-background:
+font-family:Inter,system-ui;    background:
 radial-gradient(1200px 700px at 18% 0%, rgba(179,92,255,.22), transparent 55%),
 radial-gradient(900px 600px at 85% 10%, rgba(62,225,255,.16), transparent 52%),
-radial-gradient(900px 650px at 55% 110%, rgba(70,242,163,.09), transparent 55%),
-linear-gradient(180deg, #0a0f1b 0%, #070b14 100%);
+linear-gradient(180deg, #070b14 0%, #05080f 100%);
 color:var(--text);
+min-height:100vh;
 }
 .wrap {
 max-width:1200px;
@@ -60,14 +63,15 @@ place-items:center;
 font-family:"Press Start 2P";
 font-size:14px;
 box-shadow:var(--glow);
-border: 1px solid rgba(255,255,255,.16);
+border:1px solid rgba(255,255,255,.16);
 }
 h1 {
 margin:0;
 font-size:22px;
 font-weight:900;
 letter-spacing:.2px;
-}     .subtitle {
+}
+    .subtitle {
 color:var(--muted);
 font-size:14px;
 font-weight:700;
@@ -77,12 +81,11 @@ font-weight:700;
 background:
 radial-gradient(900px 420px at 25% 0%, rgba(179,92,255,.10), transparent 60%),
 radial-gradient(900px 420px at 85% 0%, rgba(62,225,255,.08), transparent 60%),
-linear-gradient(180deg, rgba(18, 26, 48, .92) 0%, rgba(11, 16, 32, .92) 100%);
+linear-gradient(180deg, rgba(15,22,43,.96), rgba(8,12,24,.96));
 border:1px solid var(--border);
 border-radius:18px;
-box-shadow: 0 18px 45px rgba(0,0,0,.45);
+box-shadow:0 18px 45px rgba(0,0,0,.55);
 overflow:hidden;
-backdrop-filter: blur(10px);
 }
 /* Controls */
 .controls {
@@ -91,25 +94,24 @@ display:grid;
 grid-template-columns:1.4fr .8fr .8fr;
 gap:10px;
 border-bottom:1px solid var(--border);
-background: linear-gradient(180deg, rgba(210,225,255,.05), rgba(210,225,255,.02));
+background: linear-gradient(180deg, rgba(200,220,255,.05), rgba(200,220,255,.02));
 }
 .field {
 background: linear-gradient(180deg, var(--surface2), var(--surface));
 border:1px solid rgba(255,255,255,.14);
 border-radius:14px;
 padding:10px 12px;
-box-shadow: 0 10px 24px rgba(0,0,0,.18);
 }
 .field input,
 .field select {
 width:100%;
-background:none;       border:0;
+background:none;
+border:0;
 outline:0;
-color:var(--text);
-font-weight:800;
+color:var(--text);       font-weight:800;
 }
 .field input::placeholder {
-color: rgba(214, 222, 245, .62);
+color: rgba(214,222,245,.62);
 }
 /* Grid */
 .content { padding:14px; }
@@ -129,30 +131,29 @@ gap:14px;
 /* Card */
 .card {
 position:relative;
-background: linear-gradient(180deg, var(--surface2), rgba(210,225,255,.05));
+background: linear-gradient(180deg, var(--surface2), rgba(200,220,255,.05));
 border:1px solid rgba(255,255,255,.14);
 border-radius:16px;
 padding:14px;
 padding-bottom:56px;
-box-shadow: 0 16px 38px rgba(0,0,0,.22);
+box-shadow:0 16px 38px rgba(0,0,0,.32);
 }
 .badges {
-display:flex;     gap:8px;
+display:flex;
+gap:8px;
 flex-wrap:wrap;
-margin-bottom:8px;
-}
+margin-bottom:8px;      }
 .badge {
 padding:6px 10px;
 border-radius:999px;
 font-size:12px;
 font-weight:900;
 border:1px solid rgba(255,255,255,.14);
-background: rgba(210,225,255,.06);
-box-shadow: 0 10px 22px rgba(0,0,0,.16);
+background: rgba(200,220,255,.06);
 }
-.legendary { color: rgba(233, 215, 255, .98); }
-.available { color: rgba(70, 242, 163, .98); }
-.category { color: rgba(255, 204, 102, .98); }
+.legendary { color:#ecdfff; }
+.available { color:var(--good); }
+.category { color:var(--warn); }
 .name {
 font-size:16px;
 font-weight:1000;
@@ -172,22 +173,17 @@ font-weight:900;
 padding:7px 10px;
 border-radius:999px;
 border:1px solid rgba(255,255,255,.14);
-background: rgba(210,225,255,.06);
-color: rgba(244, 247, 255, .86);box-shadow: 0 10px 22px rgba(0,0,0,.16);
-white-space:nowrap;
+background: rgba(200,220,255,.06);
 }
-  .price {
+.price {
 position:absolute;
-right:12px;
-bottom:12px;
+right:12px;bottom:12px;
 font-size:14px;
 font-weight:1000;
 padding:8px 12px;
 border-radius:12px;
-background: rgba(179,92,255,.18);
+background: rgba(179,92,255,.22);
 border:1px solid rgba(255,255,255,.14);
-box-shadow: 0 10px 22px rgba(0,0,0,.16);
-white-space:nowrap;
 }
 </style>
 </head>
@@ -210,7 +206,8 @@ white-space:nowrap;
 <option value="all">All Categories</option>
 <option value="Key">Key</option>
 <option value="Armor">Armor</option>
-<option value="Weapons">Weapons</option><option value="Utility">Utility</option>
+<option value="Weapons">Weapons</option>
+<option value="Utility">Utility</option>
 </select>
 </div>
 <div class="field">
@@ -218,8 +215,7 @@ white-space:nowrap;
 <option value="priceDesc">Price ↓</option>
 <option value="priceAsc">Price ↑</option>
 </select>
-</div>
-</div>
+</div></div>
   <div class="content">
 <div id="grid" class="grid"></div>
 </div>
@@ -247,21 +243,20 @@ const ITEMS = [
 const search = document.getElementById("search");
 const category = document.getElementById("category");
 const sort = document.getElementById("sort");
-function render(){
-let list = [...ITEMS];
-  if (search.value) {
-const q = search.value.toLowerCase();
-list = list.filter(i => i.name.toLowerCase().includes(q));
+ function render(){
+let list=[...ITEMS];
+  if(search.value){
+const q=search.value.toLowerCase();
+list=list.filter(i=>i.name.toLowerCase().includes(q));
 }
-  if (category.value !== "all") {
-list = list.filter(i => i.cat === category.value);
+  if(category.value!=="all"){list=list.filter(i=>i.cat===category.value);
 }
-  list.sort((a,b) => sort.value === "priceAsc" ? a.price - b.price : b.price - a.price);
-  grid.innerHTML = "";
-list.forEach(i => {
-const el = document.createElement("div");
-el.className = "card";
-el.innerHTML = `
+  list.sort((a,b)=>sort.value==="priceAsc"?a.price-b.price:b.price-a.price);
+  grid.innerHTML="";
+list.forEach(i=>{
+const el=document.createElement("div");
+el.className="card";
+el.innerHTML=`
 <div class="badges">
 <span class="badge legendary">Legendary</span>
 <span class="badge available">Available</span>
@@ -275,9 +270,9 @@ el.innerHTML = `
 grid.appendChild(el);
 });
 }
- search.addEventListener("input", render);
-category.addEventListener("change", render);
-sort.addEventListener("change", render);
+ search.addEventListener("input",render);
+category.addEventListener("change",render);
+sort.addEventListener("change",render);
  render();
 </script>
 </body>
