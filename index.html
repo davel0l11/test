@@ -1,813 +1,259 @@
-Le<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Daves LightGens Shop</title>
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --bg: #0b0f19;
-      --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.09);
-      --border: rgba(255,255,255,.10);
-      --text: rgba(255,255,255,.90);
-      --muted: rgba(255,255,255,.65);
-      --muted2: rgba(255,255,255,.45);
-      --shadow: 0 14px 45px rgba(0,0,0,.45);
-      --accent: #b35cff;
-      --accent2:#3ee1ff;
-      --good:#46f2a3;
-      --warn:#ffcc66;
-      --bad:#ff6b7a;
-      --chip: rgba(179, 92, 255, .16);
-      --chipText:#e9d7ff;
-      --glow: 0 0 0 2px rgba(179, 92, 255, .25), 0 0 40px rgba(179,92,255,.12);
-      --radius: 18px;
-    }
-
-    [data-theme="light"]{
-      --bg:#f7f8fc;
-      --panel: rgba(0,0,0,.05);
-      --panel2: rgba(0,0,0,.07);
-      --border: rgba(0,0,0,.08);
-      --text: rgba(0,0,0,.88);
-      --muted: rgba(0,0,0,.62);
-      --muted2: rgba(0,0,0,.45);
-      --shadow: 0 14px 45px rgba(0,0,0,.12);
-      --chip: rgba(179, 92, 255, .12);
-      --chipText:#3d1369;
-      --glow: 0 0 0 2px rgba(179, 92, 255, .18), 0 0 40px rgba(179,92,255,.08);
-    }
-
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:
-        radial-gradient(1200px 800px at 20% 0%, rgba(179,92,255,.24), transparent 55%),
-        radial-gradient(900px 600px at 85% 10%, rgba(62,225,255,.18), transparent 50%),
-        radial-gradient(900px 700px at 50% 110%, rgba(70,242,163,.12), transparent 55%),
-        var(--bg);
-      color:var(--text);
-    }
-
-    .wrap{max-width:1200px;margin:0 auto;padding:26px 18px 60px}
-    .topbar{
-      display:flex;align-items:center;justify-content:space-between;gap:16px;
-      margin-bottom:18px;
-    }
-    .brand{display:flex;align-items:center;gap:14px;}
-    .logo{
-      width:46px;height:46px;border-radius:14px;
-      background: linear-gradient(135deg, rgba(179,92,255,.95), rgba(62,225,255,.7));
-      box-shadow: var(--glow);
-      display:grid;place-items:center;
-      border:1px solid var(--border);
-      flex: 0 0 auto;
-    }
-    .logo span{
-      font-family:"Press Start 2P", monospace;
-      font-size:14px;
-      transform: translateY(1px);
-      filter: drop-shadow(0 10px 14px rgba(0,0,0,.25));
-      color:white;
-    }
-    .title h1{
-      margin:0;
-      font-size:18px;
-      line-height:1.1;
-      letter-spacing:.2px;
-    }
-    .title p{
-      margin:4px 0 0;
-      font-size:13px;
-      color:var(--muted);
-    }
-
-    .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end;}
-    .btn{
-      border:1px solid var(--border);
-      background:linear-gradient(180deg, var(--panel2), var(--panel));
-      color:var(--text);
-      padding:10px 12px;
-      border-radius:14px;
-      box-shadow: 0 10px 25px rgba(0,0,0,.12);
-      cursor:pointer;
-      font-weight:800;
-      font-size:13px;
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
-      user-select:none;
-      display:flex;align-items:center;gap:8px;
-    }
-    .btn:hover{transform: translateY(-1px); border-color: rgba(179,92,255,.35)}
-    .btn:active{transform: translateY(0px) scale(.99)}
-    .btn .dot{
-      width:10px;height:10px;border-radius:999px;background:var(--accent);
-      box-shadow: 0 0 0 3px rgba(179,92,255,.18);
-    }
-    .btn.secondary .dot{background:var(--accent2); box-shadow: 0 0 0 3px rgba(62,225,255,.18);}
-    .btn.ghost{background:transparent; box-shadow:none;}
-
-    .panel{
-      border:1px solid var(--border);
-      background: linear-gradient(180deg, var(--panel2), var(--panel));
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-
-    .controls{
-      padding:14px;
-      display:grid;
-      grid-template-columns: 1.4fr .8fr .8fr .9fr;
-      gap:10px;
-      border-bottom:1px solid var(--border);
-      background:rgba(0,0,0,.06);
-    }
-    [data-theme="light"] .controls{background:rgba(255,255,255,.6);}
-
-    .field{
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      border-radius:14px;
-      padding:10px 12px;
-      display:flex;align-items:center;gap:10px;
-      min-height:44px;
-    }
-    [data-theme="light"] .field{background: rgba(0,0,0,.03);}
-    .field svg{opacity:.72}
-    .field input, .field select{
-      border:0;outline:0;background:transparent;
-      color:var(--text);
-      width:100%;
-      font-size:14px;
-      font-weight:800;
-    }
-    .field input::placeholder{color:var(--muted2); font-weight:800}
-    .field select{cursor:pointer}
-    .field select option{color:#111}
-
-    .chips{
-      padding:12px 14px;
-      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
-      border-bottom:1px solid var(--border);
-    }
-    .chip{
-      border:1px solid var(--border);
-      background: var(--chip);
-      color: var(--chipText);
-      padding:8px 10px;
-      border-radius:999px;
-      font-weight:900;
-      font-size:12px;
-      cursor:pointer;
-      user-select:none;
-      display:flex;align-items:center;gap:8px;
-      transition: transform .12s ease, border-color .12s ease, filter .12s ease;
-    }
-    .chip:hover{transform: translateY(-1px); border-color: rgba(179,92,255,.35)}
-    .chip.active{
-      border-color: rgba(179,92,255,.55);
-      filter: brightness(1.05);
-      box-shadow: var(--glow);
-    }
-    .chip .count{
-      font-size:11px;
-      padding:2px 8px;
-      border-radius:999px;
-      background: rgba(0,0,0,.18);
-      color: rgba(255,255,255,.9);
-      border:1px solid rgba(255,255,255,.12);
-    }
-    [data-theme="light"] .chip .count{
-      background: rgba(0,0,0,.10);
-      color: rgba(0,0,0,.78);
-      border-color: rgba(0,0,0,.08);
-    }
-
-    .content{padding:14px;}
-    .metaRow{
-      display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;
-      margin-bottom:12px;
-    }
-    .metaRow .stats{
-      display:flex;gap:10px;flex-wrap:wrap;
-      color:var(--muted);
-      font-size:13px;
-      font-weight:900;
-    }
-    .pill{
-      padding:6px 10px;border-radius:999px;border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
-    }
-    [data-theme="light"] .pill{background: rgba(0,0,0,.03);}
-
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap:12px;
-    }
-    @media (max-width: 980px){
-      .controls{grid-template-columns: 1fr 1fr; }
-      .grid{grid-template-columns: repeat(2, minmax(0,1fr));}
-    }
-    @media (max-width: 560px){
-      .controls{grid-template-columns: 1fr;}
-      .grid{grid-template-columns: 1fr;}
-    }
-
-    .card{
-      border:1px solid var(--border);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border-radius: 16px;
-      padding:14px;
-      cursor:pointer;
-      transition: transform .14s ease, border-color .14s ease, filter .14s ease;
-      position:relative;
-      overflow:hidden;
-      min-height:132px;
-      padding-bottom:54px; /* ensures bottom pills never overlap content */
-    }
-    [data-theme="light"] .card{
-      background: linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.02));
-    }
-    .card:hover{
-      transform: translateY(-2px);
-      border-color: rgba(179,92,255,.35);
-      filter: brightness(1.02);
-    }
-
-    .badgeRow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;align-items:center}
-    .badge{
-      padding:6px 10px;border-radius:999px;border:1px solid var(--border);
-      font-size:12px;font-weight:900;letter-spacing:.2px;
-      background: rgba(0,0,0,.16);
-    }
-    [data-theme="light"] .badge{background: rgba(0,0,0,.06);}
-    .badge.good{border-color: rgba(70,242,163,.35); color: var(--good);}
-    .badge.legend{border-color: rgba(179,92,255,.45); color: #e9d7ff;}
-    .badge.misc{border-color: rgba(255,204,102,.35); color: var(--warn);}
-
-    .name{
-      font-size:16px;font-weight:1000;margin:0 0 6px;
-      letter-spacing:.2px;
-    }
-
-    /* FIX: do NOT render duplicated units lines; keep a single "Price: X gems" line */
-    .sub{
-      margin:0;
-      color:var(--muted);
-      font-size:13px;
-      font-weight:900;
-      display:flex;gap:10px;flex-wrap:wrap;
-      align-items:center;
-    }
-
-    .price{
-      position:absolute;right:12px;bottom:12px;
-      font-weight:1000;
-      font-size:14px;
-      padding:8px 10px;border-radius:12px;
-      border:1px solid var(--border);
-      background: rgba(179,92,255,.14);
-      color: var(--chipText);
-      display:flex;align-items:center;gap:8px;
-      white-space:nowrap;
-    }
-    .units{
-      position:absolute;left:12px;bottom:12px;
-      color:var(--muted);
-      font-weight:1000;
-      font-size:12px;
-      padding:7px 10px;border-radius:999px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      white-space:nowrap;
-    }
-    [data-theme="light"] .units{background: rgba(0,0,0,.03);}
-
-    /* Modal */
-    .modalOverlay{
-      position:fixed;inset:0;
-      background: rgba(0,0,0,.55);
-      display:none;
-      align-items:center;justify-content:center;
-      padding:20px;
-      z-index:50;
-    }
-    .modalOverlay.show{display:flex}
-    .modal{
-      width:min(720px, 100%);
-      border-radius: 20px;
-      border:1px solid var(--border);
-      background: linear-gradient(180deg, rgba(20,20,28,.98), rgba(12,12,18,.98));
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    [data-theme="light"] .modal{
-      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,248,252,.98));
-    }
-    .modalHead{
-      padding:16px 16px 12px;
-      border-bottom:1px solid var(--border);
-      display:flex;justify-content:space-between;align-items:flex-start;gap:12px;
-    }
-    .modalHead h2{margin:0;font-size:18px;letter-spacing:.2px;}
-    .modalHead p{margin:6px 0 0;color:var(--muted);font-weight:900;font-size:13px;}
-
-    .modalBody{
-      padding:14px 16px 16px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-    }
-    @media (max-width: 680px){
-      .modalBody{grid-template-columns: 1fr;}
-    }
-    .kv{
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:12px 12px;
-      background: rgba(255,255,255,.04);
-    }
-    [data-theme="light"] .kv{background: rgba(0,0,0,.03);}
-    .kv .k{color:var(--muted);font-weight:1000;font-size:12px;margin-bottom:6px}
-    .kv .v{font-weight:1000;font-size:14px}
-
-    .modalActions{
-      padding:12px 16px 16px;
-      display:flex;gap:10px;flex-wrap:wrap;
-      border-top:1px solid var(--border);
-    }
-
-    .toast{
-      position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
-      border:1px solid var(--border);
-      background: rgba(0,0,0,.75);
-      color:white;
-      padding:10px 12px;
-      border-radius:999px;
-      font-weight:1000;
-      font-size:13px;
-      box-shadow: 0 14px 35px rgba(0,0,0,.30);
-      opacity:0;
-      pointer-events:none;
-      transition: opacity .2s ease, transform .2s ease;
-      z-index:60;
-    }
-    [data-theme="light"] .toast{background: rgba(10,10,14,.85);}
-    .toast.show{opacity:1; transform:translateX(-50%) translateY(-2px);}
-    .kbd{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size:12px;
-      padding:2px 6px;border-radius:8px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      margin-left:6px;
-    }
-    .ico{width:18px;height:18px;display:inline-block}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daves LightGens Shop</title>
+  <!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2
+family=Inter:wght@400;600;700;800;900&family=Press+Start+2P&display=swap"
+rel="stylesheet">
+  <style>
+:root {
+--bg:#0b0f19;
+--panel:#12172a;
+--border:rgba(255,255,255,.12);
+--text:#e9ecff;
+--muted:#9aa0c6;
+--accent:#b35cff;
+--accent2:#3ee1ff;
+--good:#46f2a3;
+--warn:#ffcc66;
+--glow:0 0 0 2px rgba(179,92,255,.35),0 0 30px rgba(179,92,255,.25);
+}
+  * { box-sizing:border-box; }
+  body {
+margin:0;
+font-family:Inter,system-ui;
+background:
+radial-gradient(1200px 700px at 20% 0%, rgba(179,92,255,.25), transparent 55%),
+radial-gradient(900px 600px at 85% 10%, rgba(62,225,255,.18), transparent 50%),
+var(--bg);
+color:var(--text);
+}
+  .wrap {
+max-width:1200px;     margin:auto;
+padding:28px 18px 60px;
+}
+/* Header */
+.topbar {
+display:flex;
+align-items:center;
+gap:14px;
+margin-bottom:22px;
+}
+.logo {
+width:48px;
+height:48px;
+border-radius:14px;
+background:linear-gradient(135deg,var(--accent),var(--accent2));
+display:grid;
+place-items:center;
+font-family:"Press Start 2P";
+font-size:14px;
+box-shadow:var(--glow);
+}
+h1 {
+margin:0;
+font-size:22px;
+font-weight:900;
+}
+.subtitle {
+color:var(--muted);
+font-size:14px;
+font-weight:700;
+}
+/* Panel */
+.panel {
+background:linear-gradient(180deg,#161b33,#0f1426);
+border:1px solid var(--border);
+border-radius:18px;
+box-shadow:0 18px 45px rgba(0,0,0,.45);      overflow:hidden;
+}
+/* Controls */
+.controls {
+padding:14px;
+display:grid;
+grid-template-columns:1.4fr .8fr .8fr;
+gap:10px;
+border-bottom:1px solid var(--border);
+}
+.field {
+background:rgba(255,255,255,.05);
+border:1px solid var(--border);
+border-radius:14px;
+padding:10px 12px;
+}
+.field input,
+.field select {
+width:100%;
+background:none;
+border:0;
+outline:0;
+color:var(--text);
+font-weight:800;
+}
+/* Grid */
+.content { padding:14px; }
+.grid {
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:14px;
+}
+@media(max-width:900px){
+.grid { grid-template-columns:repeat(2,1fr); }
+.controls { grid-template-columns:1fr 1fr; }
+}       @media(max-width:560px){
+.grid { grid-template-columns:1fr; }
+.controls { grid-template-columns:1fr; }
+}
+/* Card */
+.card {
+position:relative;
+background:rgba(255,255,255,.05);
+border:1px solid var(--border);
+border-radius:16px;
+padding:14px;
+padding-bottom:56px;
+}
+.badges {
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+margin-bottom:8px;
+}
+.badge {
+padding:6px 10px;
+border-radius:999px;
+font-size:12px;
+font-weight:900;
+border:1px solid var(--border);
+}
+.legendary { color:#e9d7ff; }
+.available { color:var(--good); }
+.category { color:var(--warn); }
+.name {
+font-size:16px;
+font-weight:1000;
+margin:4px 0 6px;
+}
+.priceLine {color:var(--muted);
+font-weight:800;
+font-size:13px;
+}
+  .units {
+position:absolute;
+left:12px;
+bottom:12px;
+font-size:12px;
+font-weight:900;
+padding:7px 10px;
+border-radius:999px;
+border:1px solid var(--border);
+background:rgba(255,255,255,.04);
+}
+  .price {
+position:absolute;
+right:12px;
+bottom:12px;
+font-size:14px;
+font-weight:1000;
+padding:8px 12px;
+border-radius:12px;
+background:rgba(179,92,255,.18);
+border:1px solid var(--border);
+}
+</style>
 </head>
-
-<body>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brand">
-        <div class="logo" title="LightGens">
-          <span>LG</span>
-        </div>
-        <div class="title">
-          <h1>Daves LightGens Shop</h1>
-          <p>Browse items by category • click any item to purchase</p>
-        </div>
-      </div>
-
-      <div class="actions">
-        <button id="themeBtn" class="btn secondary" type="button" title="Toggle theme">
-          <span class="dot"></span>
-          Theme
-        </button>
-        <button id="resetBtn" class="btn ghost" type="button" title="Reset filters">
-          Reset <span class="kbd">R</span>
-        </button>
-      </div>
-    </div>
-
-    <div class="panel">
-      <div class="controls">
-        <div class="field">
-          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2" opacity=".9"/>
-            <path d="M16.3 16.3 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          <input id="search" placeholder="Search items… (e.g. mace, key, boots)" autocomplete="off" />
-        </div>
-
-        <div class="field">
-          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          <select id="rarity">
-            <option value="all">All rarities</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M4 12h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <path d="M7 7h10v10H7V7Z" stroke="currentColor" stroke-width="2" opacity=".85"/>
-          </svg>
-          <select id="status">
-            <option value="all">All status</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M8 7h12M8 12h12M8 17h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <path d="M4 7h.01M4 12h.01M4 17h.01" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-          </svg>
-          <select id="sort">
-            <option value="priceDesc">Sort: Price (high → low)</option>
-            <option value="priceAsc">Sort: Price (low → high)</option>
-            <option value="nameAsc">Sort: Name (A → Z)</option>
-            <option value="unitsDesc">Sort: Units (high → low)</option>
-            <option value="unitsAsc">Sort: Units (low → high)</option>
-          </select>
-        </div>
-      </div>
-
-      <div id="chips" class="chips"></div>
-
-      <div class="content">
-        <div class="metaRow">
-          <div class="stats" id="stats"></div>
-          <div class="stats">
-            <span class="pill">Tip: click an item to buy</span>
-            <span class="pill"><span class="kbd">Esc</span> closes popup</span>
-          </div>
-        </div>
-
-        <div id="grid" class="grid"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal -->
-  <div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal">
-      <div class="modalHead">
-        <div>
-          <h2 id="mTitle">Purchase</h2>
-          <p id="mSubtitle">Contact details</p>
-        </div>
-        <button id="closeModal" class="btn" type="button" title="Close">
-          Close <span class="kbd">Esc</span>
-        </button>
-      </div>
-
-      <div class="modalBody">
-        <div class="kv" style="grid-column:1 / -1">
-          <div class="k">To buy this item</div>
-          <div class="v" id="mContact" style="font-size:15px">
-            Contact <b>DaveL0L</b> on <b>Discord</b> : <b>d__ve/b>.
-          </div>
-        </div>
-
-        <div class="kv">
-          <div class="k">Item</div>
-          <div class="v" id="mItem">—</div>
-        </div>
-        <div class="kv">
-          <div class="k">Price (Gems)</div>
-          <div class="v" id="mPrice">—</div>
-        </div>
-        <div class="kv">
-          <div class="k">Category</div>
-          <div class="v" id="mCategory">—</div>
-        </div>
-        <div class="kv">
-          <div class="k">Units Available</div>
-          <div class="v" id="mUnits">—</div>
-        </div>
-      </div>
-
-      <div class="modalActions">
-        <button id="copyContact" class="btn" type="button" title="Copy contact text">
-          <span class="dot"></span>
-          Copy Contact
-        </button>
-        <button id="copyOrder" class="btn secondary" type="button" title="Copy an order message">
-          <span class="dot"></span>
-          Copy Order Msg
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div id="toast" class="toast">Copied!</div>
-
-  <script>
-    const ITEMS = [
-      { item:"Legendary Key",        rarity:"Legendary", category:"Key",     price:250000, status:"Available", units:17 },
-
-      { item:"Legendary Helmet",     rarity:"Legendary", category:"Armor",   price:50000,  status:"Available", units:11 },
-      { item:"Legendary Chestplate", rarity:"Legendary", category:"Armor",   price:80000,  status:"Available", units:10 },
-      { item:"Legendary Leggings",   rarity:"Legendary", category:"Armor",   price:70000,  status:"Available", units:11 },
-      { item:"Legendary Boots",      rarity:"Legendary", category:"Armor",   price:50000,  status:"Available", units:12 },
-
-      { item:"Legendary Sword",      rarity:"Legendary", category:"Weapons", price:150000, status:"Available", units:7  },
-      { item:"Legendary Axe",        rarity:"Legendary", category:"Weapons", price:120000, status:"Available", units:2  },
-      { item:"Legendary Bow",        rarity:"Legendary", category:"Weapons", price:200000, status:"Available", units:3  },
-      { item:"Legendary Crossbow",   rarity:"Legendary", category:"Weapons", price:150000, status:"Available", units:1  },
-      { item:"Legendary Trident",    rarity:"Legendary", category:"Weapons", price:200000, status:"Available", units:3  },
-      { item:"Legendary Mace",       rarity:"Legendary", category:"Weapons", price:800000, status:"Available", units:999 },
-
-      { item:"Totem",                rarity:"Misc",      category:"Utility", price:30000,  status:"Available", units:81 },
-      { item:"Beacon",               rarity:"Misc",      category:"Utility", price:50000,  status:"Available", units:3  },
-      { item:"Elytra",               rarity:"Misc",      category:"Utility", price:100000, status:"Available", units:54 },
-      { item:"Shulker Box",          rarity:"Misc",      category:"Utility", price:50000,  status:"Available", units:15 }
-    ];
-
-    // ===== Helpers =====
-    const $ = (sel) => document.querySelector(sel);
-    const fmt = new Intl.NumberFormat("en-GB");
-    const money = (n) => fmt.format(n);
-
-    function toast(msg="Copied!") {
-      const t = $("#toast");
-      t.textContent = msg;
-      t.classList.add("show");
-      clearTimeout(toast._t);
-      toast._t = setTimeout(() => t.classList.remove("show"), 1100);
-    }
-
-    async function copy(text, msg="Copied!") {
-      try {
-        await navigator.clipboard.writeText(text);
-        toast(msg);
-      } catch (e) {
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-        toast(msg);
-      }
-    }
-
-    const uniq = (arr) => [...new Set(arr)];
-
-    function iconForCategory(cat){
-      switch(cat){
-        case "Key": return "🗝️";
-        case "Armor": return "🛡️";
-        case "Weapons": return "⚔️";
-        case "Utility": return "🧰";
-        default: return "📦";
-      }
-    }
-
-    // ===== State =====
-    const state = {
-      category: "All",
-      search: "",
-      rarity: "all",
-      status: "all",
-      sort: "priceDesc",
-      selected: null
-    };
-
-    // ===== Theme =====
-    function setTheme(theme){
-      document.documentElement.setAttribute("data-theme", theme);
-      localStorage.setItem("lg_theme", theme);
-    }
-    function toggleTheme(){
-      const cur = document.documentElement.getAttribute("data-theme") || "dark";
-      setTheme(cur === "dark" ? "light" : "dark");
-    }
-    setTheme(localStorage.getItem("lg_theme") || "dark");
-    $("#themeBtn").addEventListener("click", toggleTheme);
-
-    // ===== Build dropdowns =====
-    function buildFilters(){
-      const rarities = uniq(ITEMS.map(x => x.rarity)).sort();
-      const statuses = uniq(ITEMS.map(x => x.status)).sort();
-
-      const raritySel = $("#rarity");
-      rarities.forEach(r => {
-        const o = document.createElement("option");
-        o.value = r;
-        o.textContent = r;
-        raritySel.appendChild(o);
-      });
-
-      const statusSel = $("#status");
-      statuses.forEach(s => {
-        const o = document.createElement("option");
-        o.value = s;
-        o.textContent = s;
-        statusSel.appendChild(o);
-      });
-    }
-
-    // ===== Categories chips =====
-    function buildChips(){
-      const cats = uniq(ITEMS.map(x => x.category)).sort();
-      const all = ["All", ...cats];
-
-      const chips = $("#chips");
-      chips.innerHTML = "";
-
-      all.forEach(cat => {
-        const count = (cat==="All") ? ITEMS.length : ITEMS.filter(x => x.category === cat).length;
-
-        const el = document.createElement("div");
-        el.className = "chip" + (cat===state.category ? " active" : "");
-        el.innerHTML = `${cat==="All" ? "✨" : iconForCategory(cat)} ${cat} <span class="count">${count}</span>`;
-        el.addEventListener("click", () => { state.category = cat; render(); });
-
-        chips.appendChild(el);
-      });
-    }
-
-    // ===== Filtering + sorting =====
-    function getVisibleItems(){
-      let out = [...ITEMS];
-
-      if (state.category !== "All") out = out.filter(x => x.category === state.category);
-      if (state.rarity !== "all") out = out.filter(x => x.rarity === state.rarity);
-      if (state.status !== "all") out = out.filter(x => x.status === state.status);
-
-      const q = state.search.trim().toLowerCase();
-      if (q){
-        out = out.filter(x =>
-          (x.item + " " + x.rarity + " " + x.category + " " + x.status)
-            .toLowerCase()
-            .includes(q)
-        );
-      }
-
-      switch(state.sort){
-        case "priceAsc": out.sort((a,b)=>a.price-b.price); break;
-        case "priceDesc": out.sort((a,b)=>b.price-a.price); break;
-        case "nameAsc": out.sort((a,b)=>a.item.localeCompare(b.item)); break;
-        case "unitsAsc": out.sort((a,b)=>a.units-b.units); break;
-        case "unitsDesc": out.sort((a,b)=>b.units-a.units); break;
-      }
-
-      return out;
-    }
-
-    // ===== Render =====
-    function render(){
-      buildChips();
-
-      const items = getVisibleItems();
-
-      const totalUnits = items.reduce((s,x)=>s+x.units,0);
-      const totalValue = items.reduce((s,x)=>s+(x.price*x.units),0);
-
-      $("#stats").innerHTML = `
-        <span class="pill">Showing <b>${items.length}</b> / ${ITEMS.length} items</span>
-        <span class="pill">Units: <b>${money(totalUnits)}</b></span>
-        <span class="pill">Value (price×units): <b>${money(totalValue)}</b> gems</span>
-      `;
-
-      const grid = $("#grid");
-      grid.innerHTML = "";
-
-      if (!items.length){
-        const empty = document.createElement("div");
-        empty.className = "card";
-        empty.style.cursor = "default";
-        empty.innerHTML = `
-          <div class="badgeRow">
-            <span class="badge misc">No results</span>
-            <span class="badge good">Try clearing filters</span>
-          </div>
-          <p class="name" style="margin-top:6px">Nothing matches your search.</p>
-          <p class="sub">Press <span class="kbd">R</span> to reset everything.</p>
-        `;
-        grid.appendChild(empty);
-        return;
-      }
-
-      items.forEach(x => {
-        const card = document.createElement("div");
-        card.className = "card";
-
-        const rarityBadgeClass = x.rarity === "Legendary" ? "legend" : "misc";
-        const statusBadgeClass = x.status === "Available" ? "good" : "bad";
-
-        // FIX: only show one info line in body (price), and keep the bottom pills for Units + Price button.
-        card.innerHTML = `
-          <div class="badgeRow">
-            <span class="badge ${rarityBadgeClass}">${iconForCategory(x.category)} ${x.rarity}</span>
-            <span class="badge ${statusBadgeClass}">${x.status}</span>
-            <span class="badge">${x.category}</span>
-          </div>
-
-          <p class="name">${x.item}</p>
-
-          <p class="sub">
-            <span>Price: <b>${money(x.price)}</b> gems</span>
-          </p>
-
-          <div class="units">${money(x.units)} units</div>
-          <div class="price">${money(x.price)} 💎</div>
-        `;
-
-        // Click opens purchase/contact modal
-        card.addEventListener("click", () => openModal(x));
-        grid.appendChild(card);
-      });
-    }
-
-    // ===== Modal (Purchase Contact) =====
-    const CONTACT_TEXT = "Contact DaveL0L on Discord/ingame.";
-
-    function openModal(item){
-      state.selected = item;
-      $("#mTitle").textContent = "Purchase Item";
-      $("#mSubtitle").textContent = "How to buy";
-      $("#mItem").textContent = item.item;
-      $("#mPrice").textContent = `${money(item.price)} gems`;
-      $("#mCategory").textContent = item.category;
-      $("#mUnits").textContent = `${money(item.units)}`;
-      $("#mContact").innerHTML = `Contact <b>DaveL0L</b> on <b>Discord</b> / <b>ingame</b>.`;
-
-      const overlay = $("#modalOverlay");
-      overlay.classList.add("show");
-      overlay.setAttribute("aria-hidden", "false");
-    }
-
-    function closeModal(){
-      state.selected = null;
-      const overlay = $("#modalOverlay");
-      overlay.classList.remove("show");
-      overlay.setAttribute("aria-hidden", "true");
-    }
-
-    $("#modalOverlay").addEventListener("click", (e) => {
-      if (e.target.id === "modalOverlay") closeModal();
-    });
-    $("#closeModal").addEventListener("click", closeModal);
-
-    $("#copyContact").addEventListener("click", () => {
-      copy(d__ve, "Contact copied!");
-    });
-
-    $("#copyOrder").addEventListener("click", () => {
-      if (!state.selected) return;
-      const x = state.selected;
-      const msg = `Hi DaveL0L, I want to buy: ${x.item} for ${money(x.price)} gems.`;
-      copy(msg, "Order message copied!");
-    });
-
-    // ===== Wire controls =====
-    $("#search").addEventListener("input", (e) => { state.search = e.target.value; render(); });
-    $("#rarity").addEventListener("change", (e) => { state.rarity = e.target.value; render(); });
-    $("#status").addEventListener("change", (e) => { state.status = e.target.value; render(); });
-    $("#sort").addEventListener("change", (e) => { state.sort = e.target.value; render(); });
-
-    function resetAll(){
-      state.category = "All";
-      state.search = "";
-      state.rarity = "all";
-      state.status = "all";
-      state.sort = "priceDesc";
-
-      $("#search").value = "";
-      $("#rarity").value = "all";
-      $("#status").value = "all";
-      $("#sort").value = "priceDesc";
-
-      render();
-      toast("Reset!");
-    }
-
-    $("#resetBtn").addEventListener("click", resetAll);
-
-    // shortcuts
-    window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeModal();
-      if (e.key.toLowerCase() === "r" && !e.ctrlKey && !e.metaKey && !e.altKey) resetAll();
-    });
-
-    // init
-    buildFilters();
-    render();
-  </script>
+ <body>
+<div class="wrap">
+  <div class="topbar">
+<div class="logo">LG</div>
+<div>
+<h1>Daves LightGens Shop</h1>
+<div class="subtitle">Browse Legendary items • Contact DaveL0L to purchase</div>
+</div>
+</div>
+<div class="panel">
+<div class="controls">
+<div class="field">
+<input id="search" placeholder="Search items...">
+</div>
+<div class="field">
+<select id="category">
+<option value="all">All Categories</option>
+<option value="Key">Key</option>
+<option value="Armor">Armor</option>
+<option value="Weapons">Weapons</option>
+<option value="Utility">Utility</option>
+</select>
+</div>
+<div class="field">
+<select id="sort">
+<option value="priceDesc">Price ↓</option>
+<option value="priceAsc">Price ↑</option>
+</select>
+</div>
+</div>
+  <div class="content">
+<div id="grid" class="grid"></div>
+</div>
+</div>
+ </div>
+ <script>
+const ITEMS = [
+{name:"Legendary Key",cat:"Key",price:250000,units:17},
+{name:"Legendary Helmet",cat:"Armor",price:50000,units:11},
+{name:"Legendary Chestplate",cat:"Armor",price:80000,units:10},
+{name:"Legendary Leggings",cat:"Armor",price:70000,units:11},
+{name:"Legendary Boots",cat:"Armor",price:50000,units:12},
+{name:"Legendary Sword",cat:"Weapons",price:150000,units:7},
+{name:"Legendary Axe",cat:"Weapons",price:120000,units:2},
+{name:"Legendary Bow",cat:"Weapons",price:200000,units:3},
+{name:"Legendary Crossbow",cat:"Weapons",price:150000,units:1},
+{name:"Legendary Trident",cat:"Weapons",price:200000,units:3},
+{name:"Legendary Mace",cat:"Weapons",price:800000,units:1},{name:"Totem",cat:"Utility",price:30000,units:81},
+{name:"Beacon",cat:"Utility",price:50000,units:3},
+{name:"Elytra",cat:"Utility",price:100000,units:54},
+{name:"Shulker Box",cat:"Utility",price:50000,units:15}
+];
+ const grid = document.getElementById("grid");
+const search = document.getElementById("search");
+const category = document.getElementById("category");
+const sort = document.getElementById("sort");
+ function render(){
+let list=[...ITEMS];
+  if(search.value){
+const q=search.value.toLowerCase();
+list=list.filter(i=>i.name.toLowerCase().includes(q));
+}
+  if(category.value!=="all"){
+list=list.filter(i=>i.cat===category.value);
+}
+  list.sort((a,b)=>sort.value==="priceAsc"?a.price-b.price:b.price-a.price);
+  grid.innerHTML="";
+list.forEach(i=>{
+const el=document.createElement("div");
+el.className="card";
+el.innerHTML=`
+<div class="badges">
+<span class="badge legendary">Legendary</span>
+<span class="badge available">Available</span>
+<span class="badge category">${i.cat}</span>
+</div>
+<div class="name">${i.name}</div>
+<div class="priceLine">Price: ${i.price.toLocaleString()} gems</div>
+<div class="units">${i.units} units</div>
+<div class="price">${i.price.toLocaleString()} 💎</div>
+`;
+grid.appendChild(el);
+});}
+ search.oninput = render;
+category.onchange = render;
+sort.onchange = render;
+ render();
+</script>
 </body>
 </html>
