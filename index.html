@@ -12,29 +12,35 @@ family=Inter:wght@400;600;700;800;900&family=Press+Start+2P&display=swap"
 rel="stylesheet">
   <style>
 :root {
---bg:#0b0f19;
---panel:#12172a;
---border:rgba(255,255,255,.12);
---text:#e9ecff;
---muted:#9aa0c6;
---accent:#b35cff;
+/* Slightly prettier palette (no text changes needed) */
+--bg: #0a0f1b;
+--panel: #111a30;
+  /* "White" surfaces now a softer, fitting tint instead of stark white */
+--surface: rgba(210, 225, 255, .07);
+--surface2: rgba(210, 225, 255, .10);
+  --border: rgba(255,255,255,.12);
+  /* Text slightly lighter for better contrast on dark UI */
+--text: rgba(244, 247, 255, .94);
+--muted: rgba(214, 222, 245, .74);
+  --accent:#b35cff;
 --accent2:#3ee1ff;
 --good:#46f2a3;
 --warn:#ffcc66;
---glow:0 0 0 2px rgba(179,92,255,.35),0 0 30px rgba(179,92,255,.25);
+  --glow: 0 0 0 2px rgba(179,92,255,.30), 0 0 28px rgba(179,92,255,.18);
 }
   * { box-sizing:border-box; }
   body {
-margin:0;
-font-family:Inter,system-ui;
+margin:0;    font-family:Inter,system-ui;
 background:
-radial-gradient(1200px 700px at 20% 0%, rgba(179,92,255,.25), transparent 55%),
-radial-gradient(900px 600px at 85% 10%, rgba(62,225,255,.18), transparent 50%),
-var(--bg);
+radial-gradient(1200px 700px at 18% 0%, rgba(179,92,255,.22), transparent 55%),
+radial-gradient(900px 600px at 85% 10%, rgba(62,225,255,.16), transparent 52%),
+radial-gradient(900px 650px at 55% 110%, rgba(70,242,163,.09), transparent 55%),
+linear-gradient(180deg, #0a0f1b 0%, #070b14 100%);
 color:var(--text);
 }
-  .wrap {
-max-width:1200px;     margin:auto;
+.wrap {
+max-width:1200px;
+margin:auto;
 padding:28px 18px 60px;
 }
 /* Header */
@@ -54,23 +60,29 @@ place-items:center;
 font-family:"Press Start 2P";
 font-size:14px;
 box-shadow:var(--glow);
+border: 1px solid rgba(255,255,255,.16);
 }
 h1 {
 margin:0;
 font-size:22px;
 font-weight:900;
-}
-.subtitle {
+letter-spacing:.2px;
+}     .subtitle {
 color:var(--muted);
 font-size:14px;
 font-weight:700;
 }
 /* Panel */
 .panel {
-background:linear-gradient(180deg,#161b33,#0f1426);
+background:
+radial-gradient(900px 420px at 25% 0%, rgba(179,92,255,.10), transparent 60%),
+radial-gradient(900px 420px at 85% 0%, rgba(62,225,255,.08), transparent 60%),
+linear-gradient(180deg, rgba(18, 26, 48, .92) 0%, rgba(11, 16, 32, .92) 100%);
 border:1px solid var(--border);
 border-radius:18px;
-box-shadow:0 18px 45px rgba(0,0,0,.45);      overflow:hidden;
+box-shadow: 0 18px 45px rgba(0,0,0,.45);
+overflow:hidden;
+backdrop-filter: blur(10px);
 }
 /* Controls */
 .controls {
@@ -79,21 +91,25 @@ display:grid;
 grid-template-columns:1.4fr .8fr .8fr;
 gap:10px;
 border-bottom:1px solid var(--border);
+background: linear-gradient(180deg, rgba(210,225,255,.05), rgba(210,225,255,.02));
 }
 .field {
-background:rgba(255,255,255,.05);
-border:1px solid var(--border);
+background: linear-gradient(180deg, var(--surface2), var(--surface));
+border:1px solid rgba(255,255,255,.14);
 border-radius:14px;
 padding:10px 12px;
+box-shadow: 0 10px 24px rgba(0,0,0,.18);
 }
 .field input,
 .field select {
 width:100%;
-background:none;
-border:0;
+background:none;       border:0;
 outline:0;
 color:var(--text);
 font-weight:800;
+}
+.field input::placeholder {
+color: rgba(214, 222, 245, .62);
 }
 /* Grid */
 .content { padding:14px; }
@@ -105,22 +121,23 @@ gap:14px;
 @media(max-width:900px){
 .grid { grid-template-columns:repeat(2,1fr); }
 .controls { grid-template-columns:1fr 1fr; }
-}       @media(max-width:560px){
+}
+@media(max-width:560px){
 .grid { grid-template-columns:1fr; }
 .controls { grid-template-columns:1fr; }
 }
 /* Card */
 .card {
 position:relative;
-background:rgba(255,255,255,.05);
-border:1px solid var(--border);
+background: linear-gradient(180deg, var(--surface2), rgba(210,225,255,.05));
+border:1px solid rgba(255,255,255,.14);
 border-radius:16px;
 padding:14px;
 padding-bottom:56px;
+box-shadow: 0 16px 38px rgba(0,0,0,.22);
 }
 .badges {
-display:flex;
-gap:8px;
+display:flex;     gap:8px;
 flex-wrap:wrap;
 margin-bottom:8px;
 }
@@ -129,21 +146,24 @@ padding:6px 10px;
 border-radius:999px;
 font-size:12px;
 font-weight:900;
-border:1px solid var(--border);
+border:1px solid rgba(255,255,255,.14);
+background: rgba(210,225,255,.06);
+box-shadow: 0 10px 22px rgba(0,0,0,.16);
 }
-.legendary { color:#e9d7ff; }
-.available { color:var(--good); }
-.category { color:var(--warn); }
+.legendary { color: rgba(233, 215, 255, .98); }
+.available { color: rgba(70, 242, 163, .98); }
+.category { color: rgba(255, 204, 102, .98); }
 .name {
 font-size:16px;
 font-weight:1000;
 margin:4px 0 6px;
 }
-.priceLine {color:var(--muted);
+.priceLine {
+color:var(--muted);
 font-weight:800;
 font-size:13px;
 }
-  .units {
+.units {
 position:absolute;
 left:12px;
 bottom:12px;
@@ -151,8 +171,10 @@ font-size:12px;
 font-weight:900;
 padding:7px 10px;
 border-radius:999px;
-border:1px solid var(--border);
-background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.14);
+background: rgba(210,225,255,.06);
+color: rgba(244, 247, 255, .86);box-shadow: 0 10px 22px rgba(0,0,0,.16);
+white-space:nowrap;
 }
   .price {
 position:absolute;
@@ -162,8 +184,10 @@ font-size:14px;
 font-weight:1000;
 padding:8px 12px;
 border-radius:12px;
-background:rgba(179,92,255,.18);
-border:1px solid var(--border);
+background: rgba(179,92,255,.18);
+border:1px solid rgba(255,255,255,.14);
+box-shadow: 0 10px 22px rgba(0,0,0,.16);
+white-space:nowrap;
 }
 </style>
 </head>
@@ -176,7 +200,7 @@ border:1px solid var(--border);
 <div class="subtitle">Browse Legendary items • Contact DaveL0L to purchase</div>
 </div>
 </div>
-<div class="panel">
+  <div class="panel">
 <div class="controls">
 <div class="field">
 <input id="search" placeholder="Search items...">
@@ -186,8 +210,7 @@ border:1px solid var(--border);
 <option value="all">All Categories</option>
 <option value="Key">Key</option>
 <option value="Armor">Armor</option>
-<option value="Weapons">Weapons</option>
-<option value="Utility">Utility</option>
+<option value="Weapons">Weapons</option><option value="Utility">Utility</option>
 </select>
 </div>
 <div class="field">
@@ -214,7 +237,8 @@ const ITEMS = [
 {name:"Legendary Bow",cat:"Weapons",price:200000,units:3},
 {name:"Legendary Crossbow",cat:"Weapons",price:150000,units:1},
 {name:"Legendary Trident",cat:"Weapons",price:200000,units:3},
-{name:"Legendary Mace",cat:"Weapons",price:800000,units:1},{name:"Totem",cat:"Utility",price:30000,units:81},
+{name:"Legendary Mace",cat:"Weapons",price:800000,units:1},
+{name:"Totem",cat:"Utility",price:30000,units:81},
 {name:"Beacon",cat:"Utility",price:50000,units:3},
 {name:"Elytra",cat:"Utility",price:100000,units:54},
 {name:"Shulker Box",cat:"Utility",price:50000,units:15}
@@ -223,21 +247,21 @@ const ITEMS = [
 const search = document.getElementById("search");
 const category = document.getElementById("category");
 const sort = document.getElementById("sort");
- function render(){
-let list=[...ITEMS];
-  if(search.value){
-const q=search.value.toLowerCase();
-list=list.filter(i=>i.name.toLowerCase().includes(q));
+function render(){
+let list = [...ITEMS];
+  if (search.value) {
+const q = search.value.toLowerCase();
+list = list.filter(i => i.name.toLowerCase().includes(q));
 }
-  if(category.value!=="all"){
-list=list.filter(i=>i.cat===category.value);
+  if (category.value !== "all") {
+list = list.filter(i => i.cat === category.value);
 }
-  list.sort((a,b)=>sort.value==="priceAsc"?a.price-b.price:b.price-a.price);
-  grid.innerHTML="";
-list.forEach(i=>{
-const el=document.createElement("div");
-el.className="card";
-el.innerHTML=`
+  list.sort((a,b) => sort.value === "priceAsc" ? a.price - b.price : b.price - a.price);
+  grid.innerHTML = "";
+list.forEach(i => {
+const el = document.createElement("div");
+el.className = "card";
+el.innerHTML = `
 <div class="badges">
 <span class="badge legendary">Legendary</span>
 <span class="badge available">Available</span>
@@ -249,10 +273,11 @@ el.innerHTML=`
 <div class="price">${i.price.toLocaleString()} 💎</div>
 `;
 grid.appendChild(el);
-});}
- search.oninput = render;
-category.onchange = render;
-sort.onchange = render;
+});
+}
+ search.addEventListener("input", render);
+category.addEventListener("change", render);
+sort.addEventListener("change", render);
  render();
 </script>
 </body>
